@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 启动注解驱动的spring mvc 功能 -->
+    <mvc:annotation-driven/>
+
+    <!--springMVC只扫描controller层的bean-->
+    <context:component-scan base-package="com.swg.controller" annotation-config="true" use-default-filters="false">
+        <!--添加白名单，只扫描controller，总之要将service给排除掉即可-->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--处理请求的响应，可能是json可能是返回jsp页面-->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+
+    <!--json的话如何返回-->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+
+    <!--返回页面的话则去WEB-INF下的views文件夹下找-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+
+</beans>
