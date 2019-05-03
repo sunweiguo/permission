@@ -7,6 +7,11 @@
 
     <!-- 启动注解驱动的spring mvc 功能 -->
     <mvc:annotation-driven/>
+    
+    <!--interceptor-->
+    <mvc:interceptors>
+        <bean class="com.swg.common.HttpInterceptor" />
+    </mvc:interceptors>
 
     <!--springMVC只扫描controller层的bean-->
     <context:component-scan base-package="com.swg.controller" annotation-config="true" use-default-filters="false">
@@ -17,7 +22,7 @@
     <!--处理请求的响应，可能是json可能是返回jsp页面-->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 
-    <!--json的话如何返回-->
+    <!--定义json的话如何返回-->
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
     <!--返回页面的话则去WEB-INF下的views文件夹下找-->
