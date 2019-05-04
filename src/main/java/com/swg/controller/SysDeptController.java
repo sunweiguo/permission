@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -26,6 +27,15 @@ public class SysDeptController {
     private SysDeptService sysDeptService;
     @Autowired
     private SysTreeService sysTreeService;
+
+    /**
+     * 进入部门管理的jsp页面的路径
+     * @return
+     */
+    @RequestMapping("/dept.page")
+    public ModelAndView page() {
+        return new ModelAndView("dept");
+    }
 
     @RequestMapping("/save.json")
     @ResponseBody

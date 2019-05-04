@@ -16,5 +16,6 @@ public interface SysDeptService {
     /*更新部门*/
     void update(DeptVO deptVO);
 
+    /*更新所有子孙部门的层级信息*/
     void updateWithChild(SysDept before, SysDept after);
 }
