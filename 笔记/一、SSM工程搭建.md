@@ -284,7 +284,8 @@
         <property name="maxActive" value="20" />
         <property name="maxWait" value="60000" />
         <!--druid自带的相关的过滤器，后面会配置-->
-        <property name="filters" value="stat,wall" />
+        <!--<property name="filters" value="stat,wall" />-->
+        <property name="filters" value="stat" />
     </bean>
 
     <!--配置mybatis相关的sqlSessionFactory-->
@@ -319,9 +320,12 @@
         <property name="logSlowSql" value="true" />
         <property name="mergeSql" value="true" />
     </bean>
+    <!--由于在后面的批量插入操作中报错，索性直接删除wall的配置-->
+    <!--
     <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
         <property name="dbType" value="mysql" />
     </bean>
+    -->
 
 </beans>
 ```
