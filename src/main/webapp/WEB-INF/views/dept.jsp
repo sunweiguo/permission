@@ -27,6 +27,7 @@
             </a>
         </div>
         <div id="deptList">
+            <%--1.填充部门列表的地方--%>
         </div>
     </div>
     <div class="col-sm-9">
@@ -74,7 +75,9 @@
                             <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
                         </tr>
                         </thead>
-                        <tbody id="userList"></tbody>
+                        <tbody id="userList">
+                        <%--2.填充用户列表的地方--%>
+                        </tbody>
                     </table>
                     <div class="row" id="userPage">
                     </div>
@@ -83,6 +86,7 @@
         </div>
     </div>
 </div>
+<%--3.一个弹出框，用于部门的新增和修改--%>
 <div id="dialog-dept-form" style="display: none;">
     <form id="deptForm">
         <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
@@ -108,6 +112,7 @@
         </table>
     </form>
 </div>
+<%--3.一个弹出框，用于用户的新增和修改--%>
 <div id="dialog-user-form" style="display: none;">
     <form id="userForm">
         <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
@@ -147,6 +152,32 @@
         </table>
     </form>
 </div>
+
+<script id="deptListTemplate" type="x-tmpl-mustache">
+<ol class="dd-list">
+    {{#deptList}}
+        <li class="dd-item dd2-item dept-name" id="dept_{{id}}" href="javascript:void(0)" data-id="{{id}}">
+            <div class="dd2-content" style="cursor:pointer;">
+            {{name}}
+            <span style="float:right;">
+                <a class="green dept-edit" href="#" data-id="{{id}}" >
+                    <i class="ace-icon fa fa-pencil bigger-100"></i>
+                </a>
+                &nbsp;
+                <a class="red dept-delete" href="#" data-id="{{id}}" data-name="{{name}}">
+                    <i class="ace-icon fa fa-trash-o bigger-100"></i>
+                </a>
+            </span>
+            </div>
+        </li>
+    {{/deptList}}
+</ol>
+</script>
+<script type="application/javascript">
+
+</script>
+
+
 
 
 </body>
