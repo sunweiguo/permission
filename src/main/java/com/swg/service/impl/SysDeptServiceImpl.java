@@ -1,10 +1,12 @@
 package com.swg.service.impl;
 
+import com.swg.common.RequestHolder;
 import com.swg.dao.SysDeptMapper;
 import com.swg.entity.SysDept;
 import com.swg.exception.ParamException;
 import com.swg.service.SysDeptService;
 import com.swg.util.BeanValidator;
+import com.swg.util.IpUtil;
 import com.swg.util.LevelUtil;
 import com.swg.vo.DeptVO;
 import lombok.extern.slf4j.Slf4j;
@@ -75,11 +77,9 @@ public class SysDeptServiceImpl implements SysDeptService {
         SysDept after = SysDept.builder().id(deptVO.getId()).name(deptVO.getName()).parentId(deptVO.getParentId())
                 .seq(deptVO.getSeq()).remark(deptVO.getRemark()).build();
         after.setLevel(LevelUtil.calculateLevel(getLevel(deptVO.getParentId()),deptVO.getParentId()));
-        /*TODO:继续构建数据，这里先放默认的*/
-        after.setOperator("System");
-        after.setOperateIp("127.0.0.1");
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
+        after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
-
         updateWithChild(before,after);
     }
 

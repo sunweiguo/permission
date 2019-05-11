@@ -68,5 +68,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         Map parameterMap = request.getParameterMap();
         log.info("request completed. url:{}, params:{}", url, JsonUtil.obj2String(parameterMap));
         log.info("【本接口的执行时间为：{}(毫秒)】",System.currentTimeMillis()-local.get());
+        local.remove();
+        RequestHolder.remove();;
     }
 }
