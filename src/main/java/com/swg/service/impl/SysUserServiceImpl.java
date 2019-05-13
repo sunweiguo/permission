@@ -1,7 +1,6 @@
 package com.swg.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.swg.beans.Mail;
 import com.swg.common.RequestHolder;
 import com.swg.dao.SysUserMapper;
 import com.swg.entity.SysUser;
@@ -28,17 +27,17 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserMapper sysUserMapper;
 
     /**
-     * 密码是随机生成并通过邮发送给用户的形式
+     * 注册用户
+     * 密码显示固定的，如果后续有精力写一下注册页面，不过后台管理系统搞注册也是怪怪的，那就不搞了吧，这里我就用密码123来登陆即可
      * @param userVO
      */
     @Override
     public void saveUser(UserVO userVO) {
         checkUserVo(userVO);
-        //4.密码随机生成并加密,这里为了方便，先用固定的
+        //4.密码随机生成并加密,这里为了方便，先用固定的(TODO：注册页面)
         String password = PasswordUtil.randomPassword();
-        //发送邮件告诉用户密码 TODO
-        String encryptedPassword = MD5Util.encrypt(password);
-        MailUtil.send(Mail.builder().subject("权限系统").message("您的密码是："+encryptedPassword+"，请不要泄漏").receivers(userVO.getMail()).build());
+        //发送邮件告诉用户密码
+        String encryptedPassword = MD5Util.encrypt("123");
         //5.插入新用户
         SysUser user = SysUser.builder().username(userVO.getUsername()).telephone(userVO.getTelephone()).mail(userVO.getMail())
                 .password(encryptedPassword).deptId(userVO.getDeptId()).status(userVO.getStatus()).remark(userVO.getRemark()).build();
