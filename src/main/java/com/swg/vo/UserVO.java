@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class UserVO {
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "用户名不可以为空")
     @Length(min = 1, max = 20, message = "用户名长度需要在20个字以内")

@@ -1,11 +1,16 @@
 package com.swg.controller;
 
+import com.swg.beans.PageQuery;
+import com.swg.beans.PageResult;
 import com.swg.common.JsonData;
+import com.swg.entity.SysUser;
 import com.swg.service.SysUserService;
 import com.swg.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/sys/user")
+@Slf4j
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
@@ -33,4 +39,13 @@ public class SysUserController {
         sysUserService.update(userVO);
         return JsonData.success();
     }
+
+    @RequestMapping("/list.json")
+    @ResponseBody
+    public JsonData listUser(@RequestParam("deptId") int deptId, PageQuery pageQuery){
+        log.info("分页查询的参数为：{}",pageQuery);
+        PageResult<SysUser> result = sysUserService.getPageByDeptId(deptId, pageQuery);
+        return JsonData.success(result);
+    }
+
 }

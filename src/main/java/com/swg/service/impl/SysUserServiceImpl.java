@@ -1,6 +1,8 @@
 package com.swg.service.impl;
 
 import com.google.common.base.Preconditions;
+import com.swg.beans.PageQuery;
+import com.swg.beans.PageResult;
 import com.swg.common.RequestHolder;
 import com.swg.dao.SysUserMapper;
 import com.swg.entity.SysUser;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author swg.
@@ -34,7 +37,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void saveUser(UserVO userVO) {
         checkUserVo(userVO);
-        //4.密码随机生成并加密,这里为了方便，先用固定的(TODO：注册页面)
+        //4.密码随机生成并加密,这里为了方便，先用固定的
         String password = PasswordUtil.randomPassword();
         //发送邮件告诉用户密码
         String encryptedPassword = MD5Util.encrypt("123");
@@ -85,5 +88,18 @@ public class SysUserServiceImpl implements SysUserService {
 
     private boolean checkTelephoneExist(String telephone, Integer userId) {
         return sysUserMapper.countByTelephone(telephone, userId) > 0;
+    }
+
+    @Override
+    public PageResult<SysUser> getPageByDeptId(int deptId, PageQuery pageQuery) {
+        BeanValidator.check(pageQuery);
+        //根据部门id获取这个部门下的所有用户
+        int userListCount = sysUserMapper.countByDeptId(deptId);
+        if(userListCount > 0){
+            //根据部门id和前端的页面查询出指定的分页信息
+            List<SysUser> userPage = sysUserMapper.getUserPageByDeptId(deptId,pageQuery);
+            return PageResult.<SysUser>builder().total(userListCount).data(userPage).build();
+        }
+        return PageResult.<SysUser>builder().build();
     }
 }

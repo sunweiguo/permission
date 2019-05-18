@@ -1,5 +1,7 @@
 package com.swg.service;
 
+import com.swg.beans.PageQuery;
+import com.swg.beans.PageResult;
 import com.swg.entity.SysUser;
 import com.swg.vo.UserVO;
 
@@ -18,4 +20,6 @@ public interface SysUserService {
 
     /*根据用户登陆的用户账号找用户*/
     SysUser findByKeyword(String keyword);
+
+    PageResult<SysUser> getPageByDeptId(int deptId, PageQuery pageQuery);
 }

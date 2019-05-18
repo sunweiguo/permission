@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @ToString
 public class DeptVO {
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "部门名称不可以为空")
     @Length(max = 15, min = 2, message = "部门名称长度需要在2-15个字之间")

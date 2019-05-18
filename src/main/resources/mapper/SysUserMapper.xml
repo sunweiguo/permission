@@ -186,4 +186,17 @@
     WHERE telephone = #{keyword}
     OR mail = #{keyword}
   </select>
+
+  <select id="countByDeptId" parameterType="int" resultType="int">
+    select count(1) from sys_user where dept_id = #{deptId}
+  </select>
+
+  <select id="getUserPageByDeptId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sys_user
+    where dept_id = #{deptId}
+    order by username ASC
+    limit #{pageQuery.offset},#{pageQuery.pageSize}
+  </select>
 </mapper>
